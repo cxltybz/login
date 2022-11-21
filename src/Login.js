@@ -40,7 +40,8 @@ const Login = () => {
         <Form
             name="basic"
             labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
+            wrapperCol={{ span: 8 }}
+            // 可以设置默认值
             initialValues={{
                 remember: true
             }}
@@ -71,19 +72,18 @@ const Login = () => {
                     <Select.Option value="2">区长</Select.Option>
                 </Select>
             </Form.Item>
-            <Form.Item name="checked" rules={[{ required: true, message: '请同意协议!' }]} valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item name="checked" wrapperCol={{ offset: 8, span: 8 }} rules={[{ required: true, message: '请同意协议!' }]} valuePropName="checked">
                 <Checkbox checked={checkNick} onChange={onCheckboxChange}>
                     <Button type="link" href='https://www.baidu.com/s?ie=UTF-8&wd=%E4%B8%96%E7%95%8C%E6%9D%AF'>协议</Button>
                 </Checkbox>
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button htmlType="button" onClick={onReset}>重置</Button>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
+                <Button htmlType="button" onClick={onReset} style={{ marginRight: '8px' }}>重置</Button>
                 <Button type="primary" htmlType="submit">
                     登录
                 </Button>
             </Form.Item>
+
         </Form>
     );
 };
