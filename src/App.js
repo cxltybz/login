@@ -1,10 +1,16 @@
+
 import React from 'react';
-import { Button } from 'antd';
-function App() {
+import {  Route,Routes } from 'react-router-dom';
+import Login from './Login';
+import Home from './Home'
+const App=()=> {
   return (
-    <>app
-      <Button type='primary'>button</Button>
-    </>
+   <div>
+     <Routes>
+      <Route path="/" exact element={<Login />} />
+      <Route path="/home" exact element={<Home />}/> 
+    </Routes>
+   </div>
   );
 }
 

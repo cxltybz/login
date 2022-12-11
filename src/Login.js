@@ -1,39 +1,42 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input, Select, message } from 'antd';
-import axios from 'axios';
+// 模拟的账号数据
+const list ={name:'admin',password:'admin'}
 const Login = () => {
+    let timer;
+    // form 表单
     const [form] = Form.useForm();
-    const [checkNick, setCheckNick] = useState(false);
+    // 协议判断
+    const [checkStatus, setCheckStatus] = useState(false);
+    // 账号验证显示
+    const [nameStatus,setNameStatus]=useState(false);
+    // 密码验证提示
+    const [passwordStatus,setPasswordStatus]=useState(false);
+
+    
     // 登录提交验证
-    const onFinish = (values) => {
-        console.log(values);
-        axios.get('/api/login').then(res => {
-            const user = res.data
-            user.map(item => {
-                if (item.name == values.name && item.password == values.name && item.identity == values.identity) {
-                    message.success('登录成功', 2.5)
-                    return false;
-                } else {
-                    message.success('账号验证失败', 2.5)
-                    return false;
-                }
-            })
-
-        }).catch(() => {
-            console.log('error');
-            message.error('登录失败', 2.5)
-        });
+    const onSubmit = (values) => {
+      timer= setTimeout(() => {
+        if(values.name!==list.name){
+            setNameStatus(true)
+        }
+         if(values.password!==list.password){
+            setPasswordStatus(true)
+        }
+        if(values.name===list.name&&values.password===list.password){
+            message.success('登录成功')
+            const information ={...values, title:'大淘宝-逛逛&光合-常州基地',url:'https://i03piccdn.sogoucdn.com/8e76a1d0527f349b'}
+            localStorage.setItem('LoginName',JSON.stringify(information))
+            window.open('http://localhost:3000/home')
+        }else {
+            message.success('登录失败', 2.5)
+        }
+       }, 1000);
+       
     };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-    const onCheckboxChange = (e) => {
-        setCheckNick(e.target.checked);
-    };
-    // 清除按钮
-    const onReset = () => {
-        form.resetFields();
+// 协议确认事件
+    const onCheckChange = (e) => {
+        setCheckStatus(e.target.checked);
     }
 
     return (
@@ -41,19 +44,18 @@ const Login = () => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 8 }}
-            // 可以设置默认值
-            initialValues={{
-                remember: true
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+            onFinish={onSubmit}
             autoComplete="off"
             form={form}
         >
             <Form.Item
                 label="账号"
                 name="name"
+                onChange={
+                    ()=>setNameStatus(false)
+                }
                 rules={[{ required: true, message: '请输入你的账号!' }]}
+                extra={nameStatus ?'账号输入错误':false}
             >
                 <Input />
             </Form.Item>
@@ -61,24 +63,29 @@ const Login = () => {
             <Form.Item
                 label="密码"
                 name="password"
+                onChange={
+                    ()=>setPasswordStatus(false)
+                }
                 rules={[{ required: true, message: '请输入你的密码!' }]}
+                extra={passwordStatus?'密码输入错误':false}
+                
             >
                 <Input.Password />
             </Form.Item>
             <Form.Item label="身份" name="identity"
                 rules={[{ required: true, message: '请选择你的身份!' }]}>
                 <Select>
-                    <Select.Option value="1">组长</Select.Option>
-                    <Select.Option value="2">区长</Select.Option>
+                    <Select.Option value="组长">组长</Select.Option>
+                    <Select.Option value="区长">区长</Select.Option>
                 </Select>
             </Form.Item>
             <Form.Item name="checked" wrapperCol={{ offset: 8, span: 8 }} rules={[{ required: true, message: '请同意协议!' }]} valuePropName="checked">
-                <Checkbox checked={checkNick} onChange={onCheckboxChange}>
-                    <Button type="link" href='https://www.baidu.com/s?ie=UTF-8&wd=%E4%B8%96%E7%95%8C%E6%9D%AF'>协议</Button>
+                <Checkbox checked={checkStatus} onChange={onCheckChange}>
+                    <Button type="link"  onClick
+                    ={()=>window.open('https://www.baidu.com/s?ie=UTF-8&wd=%E4%B8%96%E7%95%8C%E6%9D%AF')}>协议</Button>
                 </Checkbox>
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
-                <Button htmlType="button" onClick={onReset} style={{ marginRight: '8px' }}>重置</Button>
                 <Button type="primary" htmlType="submit">
                     登录
                 </Button>
