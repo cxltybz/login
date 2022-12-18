@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState} from 'react';
+import { useNavigate} from 'react-router-dom'
+// import {withRouter} from 'react-router-dom'
 import { Button, Checkbox, Form, Input, Select, message } from 'antd';
 // 模拟的账号数据
 const list ={name:'admin',password:'admin'}
 const Login = () => {
+    // 版本6不通过history传递
+    const navigate=useNavigate()
     let timer;
     // form 表单
     const [form] = Form.useForm();
@@ -25,9 +29,9 @@ const Login = () => {
         }
         if(values.name===list.name&&values.password===list.password){
             message.success('登录成功')
-            const information ={...values, title:'大淘宝-逛逛&光合-常州基地',url:'https://i03piccdn.sogoucdn.com/8e76a1d0527f349b'}
-            localStorage.setItem('LoginName',JSON.stringify(information))
-            window.open('http://localhost:3000/home')
+            delete values.checked
+            delete values.identity
+            navigate('/home', {state:{...values}})
         }else {
             message.success('登录失败', 2.5)
         }
@@ -38,6 +42,13 @@ const Login = () => {
     const onCheckChange = (e) => {
         setCheckStatus(e.target.checked);
     }
+
+    useEffect(() => {
+      return () => {
+       clearTimeout(timer)
+      }
+    }, [])
+    
 
     return (
         <Form
@@ -95,4 +106,5 @@ const Login = () => {
     );
 };
 
+// export default  withRouter(Login) ;
 export default Login;

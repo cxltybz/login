@@ -1,16 +1,17 @@
 
-import React from 'react';
-import {  Route,Routes } from 'react-router-dom';
+import React  from 'react';
+import {  Route,Routes,BrowserRouter} from 'react-router-dom';
 import Login from './Login';
 import Home from './Home'
 const App=()=> {
+  
   return (
-   <div>
+    <BrowserRouter>
      <Routes>
       <Route path="/" exact element={<Login />} />
       <Route path="/home" exact element={<Home />}/> 
     </Routes>
-   </div>
+    </BrowserRouter>
   );
 }
 
