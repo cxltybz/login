@@ -3,7 +3,9 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import './index.css'
 const Header=(props)=>{
+    // 传递的参数
     const {url}=props;
+    // url 照片地址
    return ( 
     <div className="Header">
         <Avatar  size={30} icon={<UserOutlined />} src
