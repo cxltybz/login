@@ -1,21 +1,19 @@
-import React from "react";
+import React,{useContext} from "react";
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-import './index.css'
-const Header=(props)=>{
+import CountContext from "../../const";
+
+const Header=()=>{
     // 传递的参数
-    const {url}=props;
+    const value = useContext(CountContext)
     // url 照片地址
+    const url=value.url||'http://img.wxcha.com/m00/f0/f5/5e3999ad5a8d62188ac5ba8ca32e058f.jpg'
    return ( 
-    <div className="Header">
+    <div>
         <Avatar  size={30} icon={<UserOutlined />} src
         ={url} />
     </div>
    )
   
-}
-Header.defaultProps = {
-    // 默认图片
-    url: 'http://img.wxcha.com/m00/f0/f5/5e3999ad5a8d62188ac5ba8ca32e058f.jpg'
 }
  export default Header

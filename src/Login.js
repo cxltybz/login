@@ -1,5 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import { useNavigate} from 'react-router-dom'
+
+import {useLocation} from 'react-router-dom'
 // import {withRouter} from 'react-router-dom'
 import { Button, Checkbox, Form, Input, Select, message } from 'antd';
 // 模拟的账号数据
@@ -7,6 +9,8 @@ const list ={name:'admin',password:'admin'}
 const Login = () => {
     // 版本6不通过history传递
     const navigate=useNavigate()
+    const location=useLocation()
+    const {state}=location
     let timer;
     // form 表单
     const [form] = Form.useForm();
@@ -44,6 +48,10 @@ const Login = () => {
     }
 
     useEffect(() => {
+        // 获取账号是否已经登录
+        if(localStorage.getItem('token')){
+            navigate('/home', {state:{...list}})
+        }
       return () => {
        clearTimeout(timer)
       }
@@ -57,6 +65,8 @@ const Login = () => {
             wrapperCol={{ span: 8 }}
             onFinish={onSubmit}
             autoComplete="off"
+            // 如果账号已经登录过就填充填写的数据
+            initialValues={{ name:state?.name,password:state?.password,identity:state?.identity }}
             form={form}
         >
             <Form.Item
@@ -106,5 +116,4 @@ const Login = () => {
     );
 };
 
-// export default  withRouter(Login) ;
 export default Login;
