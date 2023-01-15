@@ -10,6 +10,7 @@ const App=()=> {
      <Routes>
       <Route path="/" exact element={<Login />} />
       <Route path="/home" exact element={<Home />}/> 
+      <Route path="*"  element={<Login />}/> 
     </Routes>
     </BrowserRouter>
   );
