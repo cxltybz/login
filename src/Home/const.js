@@ -1,4 +1,4 @@
-import {createContext} from 'react'
+import { createContext } from "react";
 // 定义的静态Context
-const CountContext = createContext()
-export default CountContext
+const CountContext = createContext();
+export default CountContext;
