@@ -14,7 +14,8 @@ const Home = () => {
     const [information, setInformation] = useState({});
     // 页面登录的状态和信息
     const value = useContext(CountContext);
-    const { informationList, loginStatus } = value;
+    const { informationList, loginStatus, num } = value;
+    console.log(loginStatus, num);
     // 动态加载
     const [statusLoading, setStatusLoading] = useState(true);
 

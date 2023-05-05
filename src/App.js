@@ -23,21 +23,21 @@ const App = () => {
     const signOutChange = useCallback(() => {
         setLoginStatus(false);
     }, []);
-    // 判断是否退出登录的状态
-    useEffect(() => {
-        if (JSON.parse(localStorage.getItem("tokenStatus")) || loginStatus) {
-            setLoginStatus(true);
-        } else {
-            setLoginStatus(false);
-        }
-        return () => {};
-    }, []);
+    // // 判断是否退出登录的状态
+    // useEffect(() => {
+    //     if (JSON.parse(localStorage.getItem("tokenStatus")) || loginStatus) {
+    //         setLoginStatus(true);
+    //     } else {
+    //         setLoginStatus(false);
+    //     }
+    // }, []);
 
     return (
         <CountContext.Provider
             value={{
                 informationList,
                 loginStatus,
+                setLoginStatus,
                 successChange,
                 signOutChange,
             }}

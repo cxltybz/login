@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Checkbox, Form, Input, Select, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import LoginContext from "./const";
+import LoginContext from "../const";
+
 // 模拟的账号数据
 const list = { name: "admin", password: "admin" };
 // 定时器
@@ -11,7 +12,8 @@ const Login = () => {
     const navigate = useNavigate();
     // 获取登录的context
     const value = useContext(LoginContext);
-    const { loginStatus, successChange, signOutChange } = value;
+    const { loginStatus, setLoginStatus } = value;
+    console.log(loginStatus);
 
     // 协议判断
     const [checkStatus, setCheckStatus] = useState(false);
@@ -44,8 +46,9 @@ const Login = () => {
                     )
                 );
                 // 登录的状态
-                localStorage.setItem("tokenStatus", true);
-                successChange();
+                // localStorage.setItem("tokenStatus", true);
+                // successChange();
+                setLoginStatus(true);
                 navigate("/home");
             } else {
                 message.success("登录失败", 2.5);
@@ -74,7 +77,7 @@ const Login = () => {
         return () => {
             clearTimeout(timer);
         };
-    }, [loginStatus]);
+    }, [loginStatus, form, navigate]);
 
     return (
         <>
