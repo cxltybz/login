@@ -15,14 +15,14 @@ const App = () => {
     // 登录的状态
     const [loginStatus, setLoginStatus] = useState(false);
 
-    // 登录成功的事件
-    const successChange = useCallback(() => {
-        setLoginStatus(true);
-    }, []);
-    // 退出登录的事件
-    const signOutChange = useCallback(() => {
-        setLoginStatus(false);
-    }, []);
+    // // 登录成功的事件
+    // const successChange = useCallback(() => {
+    //     setLoginStatus(true);
+    // }, []);
+    // // 退出登录的事件
+    // const signOutChange = useCallback(() => {
+    //     setLoginStatus(false);
+    // }, []);
     // // 判断是否退出登录的状态
     // useEffect(() => {
     //     if (JSON.parse(localStorage.getItem("tokenStatus")) || loginStatus) {
