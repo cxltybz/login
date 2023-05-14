@@ -1,20 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Checkbox, Form, Input, Select, message } from "antd";
 import { useNavigate } from "react-router-dom";
+
 import LoginContext from "../const";
 
-// 模拟的账号数据
-const list = { name: "admin", password: "admin" };
 // 定时器
 let timer;
+// 退出状态的常量
+const exit = "2";
+
 const Login = () => {
     // 版本6不通过history传递
     const navigate = useNavigate();
     // 获取登录的context
     const value = useContext(LoginContext);
-    const { loginStatus, setLoginStatus } = value;
-    console.log(loginStatus);
-
+    // 获取登录人的个人信息
+    const {
+        list,
+        loginStatus,
+        setLoginStatus,
+        setInformationList,
+        informationList,
+    } = value;
     // 协议判断
     const [checkStatus, setCheckStatus] = useState(false);
     // 账号验证显示
@@ -38,20 +45,26 @@ const Login = () => {
             ) {
                 message.success("登录成功");
                 delete values.checked;
+                console.log(values);
+                setInformationList({
+                    ...informationList,
+                    name: values?.name,
+                    identity: values?.identity,
+                });
                 //   加密
-                localStorage.setItem(
-                    "token",
-                    window.btoa(
-                        window.encodeURIComponent(JSON.stringify(values))
-                    )
-                );
+                // localStorage.setItem(
+                //     "token",
+                //     window.btoa(
+                //         window.encodeURIComponent(JSON.stringify(values))
+                //     )
+                // );
+
                 // 登录的状态
-                // localStorage.setItem("tokenStatus", true);
-                // successChange();
+                localStorage.setItem("tokenStatus", 1);
                 setLoginStatus(true);
                 navigate("/home");
             } else {
-                message.success("登录失败", 2.5);
+                message.error("登录失败", 2.5);
             }
         }, 1000);
     };
@@ -63,15 +76,12 @@ const Login = () => {
         // 获取账号是否已经登录
         if (loginStatus) {
             navigate("/home");
-        } else if (localStorage.getItem("token")) {
-            const value = JSON.parse(
-                decodeURIComponent(window.atob(localStorage.getItem("token")))
-            );
+        } else if (localStorage.getItem("tokenStatus") === exit) {
             // 如果账号已经登录过就填充填写的数据
             form.setFieldsValue({
-                name: value.name,
-                password: value.password,
-                identity: value.identity,
+                name: informationList.name,
+                password: list.password,
+                identity: informationList.identity,
             });
         }
         return () => {

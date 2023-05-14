@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -6,6 +6,7 @@ import "./index.css";
 
 const DetailedInformation = props => {
     // 传递的参数
+
     const { url, title, identity, name } = props;
     //  url 照片地址,title公司地址, identity职位,name 用户
     return (

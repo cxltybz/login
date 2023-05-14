@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../Header";
 import { Dropdown, Space } from "antd";
-import "./index.css";
+import { useNavigate } from "react-router-dom";
+
+import Header from "../Header";
 import CountContext from "../../../const";
+
+import "./index.css";
+
 const PersonalDataDropdown = () => {
     // 弹窗是否显示
     const [open, setOpen] = useState(false);
     // 获取静态的数据
     const value = useContext(CountContext);
-    const { informationList, signOutChange } = value;
+    const { informationList, setLoginStatus } = value;
 
     // 获取路由
     const navigate = useNavigate();
@@ -17,10 +20,10 @@ const PersonalDataDropdown = () => {
     const onClick = ({ key }) => {
         if (key == 3) {
             // 删除登录的权限
-            localStorage.setItem("tokenStatus", false);
-            signOutChange();
+            localStorage.setItem("tokenStatus", 2);
             // 给登录页面已经登录过的数据
             navigate("/");
+            setLoginStatus(false);
         }
     };
 
