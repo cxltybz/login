@@ -51,13 +51,6 @@ const Login = () => {
                     name: values?.name,
                     identity: values?.identity,
                 });
-                //   加密
-                // localStorage.setItem(
-                //     "token",
-                //     window.btoa(
-                //         window.encodeURIComponent(JSON.stringify(values))
-                //     )
-                // );
 
                 // 登录的状态
                 localStorage.setItem("tokenStatus", 1);

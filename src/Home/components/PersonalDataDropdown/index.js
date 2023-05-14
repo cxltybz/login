@@ -12,6 +12,7 @@ const PersonalDataDropdown = () => {
     const [open, setOpen] = useState(false);
     // 获取静态的数据
     const value = useContext(CountContext);
+    // 获取登录人的个人信息和登录状态
     const { informationList, setLoginStatus } = value;
 
     // 获取路由

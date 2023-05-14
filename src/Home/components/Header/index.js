@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
+
 import CountContext from "../../../const";
 
 const Header = () => {
     // 传递的参数
     const value = useContext(CountContext);
+    // 获取登录人的图片地址
     const [getUrl, setGetUrl] = useState("");
+    // 获取登录人的个人信息
     const { informationList } = value;
     let timer;
     useEffect(() => {
